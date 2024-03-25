@@ -7,15 +7,17 @@ namespace DotNET.HttpClient.Sample.Api.Github.IHttpClientFactory
     public class GithubService : IGithubService
     {
         private readonly GithubSettings _settings;
+        private readonly System.Net.Http.IHttpClientFactory _factory;
 
-        public GithubService(IOptions<GithubSettings> settings)
+        public GithubService(IOptions<GithubSettings> settings, System.Net.Http.IHttpClientFactory factory)
         {
             _settings = settings.Value;
+            _factory = factory;
         }
 
         public async Task<GithubUser?> GetUserAsync(string username)
         {
-            var client = new System.Net.Http.HttpClient();
+           var client = _factory.CreateClient();
 
             client.DefaultRequestHeaders.Add("Authorization", _settings.GithubToken);
             client.DefaultRequestHeaders.Add("User-Agent", _settings.UserAgent);
@@ -26,6 +28,5 @@ namespace DotNET.HttpClient.Sample.Api.Github.IHttpClientFactory
 
             return user;
         }
-
     }
 }
