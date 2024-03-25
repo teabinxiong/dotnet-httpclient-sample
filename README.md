@@ -12,7 +12,7 @@ This repository contains few example of creation of the HttpClient in .NET Core 
 2. **Named Clients**:
    - [NamedClients](./src/DotNET.HttpClient.Sample/DotNET.HttpClient.Sample.Api/Github/NamedClients)
 
-3. **Typed Clients**: A class library project used for translation purposes.
+3. **Typed Clients**: 
    - [TypedClients](./src/DotNET.HttpClient.Sample/DotNET.HttpClient.Sample.Api/Github/TypedClients)
 
 
