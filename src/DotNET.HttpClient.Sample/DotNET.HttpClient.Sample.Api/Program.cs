@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IGithubService, GithubService>();
 
-// Add named client HttiClient
+// Add named client HttpClientFactory
 builder.Services.AddHttpClient("github", (serviceProvider, client) =>
 {
     var settings = serviceProvider
@@ -29,6 +29,18 @@ builder.Services.AddHttpClient("github", (serviceProvider, client) =>
     client.BaseAddress = new Uri("https://api.github.com");
 });
 
+
+// Add typed clients HttpClientFactory
+builder.Services.AddHttpClient<GithubService>((serviceProvider, client) =>
+{
+    var settings = serviceProvider
+        .GetRequiredService<IOptions<GithubSettings>>().Value;
+
+    client.DefaultRequestHeaders.Add("Authorization", settings.GithubToken);
+    client.DefaultRequestHeaders.Add("User-Agent", settings.UserAgent);
+
+    client.BaseAddress = new Uri("https://api.github.com");
+});
 
 
 var app = builder.Build();
